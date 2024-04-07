@@ -1,0 +1,23 @@
+services:
+
+    discord_bot_stable_diffusion_xl:
+        build:
+            context: ./
+            dockerfile: docker/python/Dockerfile
+        container_name: discord_bot_stable_diffusion_xl
+        env_file:
+            - ./docker/python/stable-diffusion-xl.env
+        image: discord_bot_stable_diffusion_xl
+        volumes:
+            - ./code/stable-diffusion-xl:/code
+
+    discord_bot_animagine_xl:
+        build:
+            context: ./
+            dockerfile: docker/python/Dockerfile
+        container_name: discord_bot_animagine_xl
+        env_file:
+            - ./docker/python/animagine.env
+        image: discord_bot_animagine_xl
+        volumes:
+            - ./code/animagine-xl:/code
