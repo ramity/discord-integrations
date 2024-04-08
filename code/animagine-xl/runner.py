@@ -34,11 +34,17 @@ class TTIClient(discord.Client):
         if str(message.channel.id) != str(os.getenv('CHANNEL_ID')):
             return
 
-        await message.channel.send(f"Processing prompt: {message.content}")
+        # Ignore message not starting with !prompt command
+        if not message.content.startswith("!prompt"):
+            return
+
+        prompt = message.content[8:]
+
+        await message.channel.send(f"Processing prompt: {prompt}")
 
         # Run the pipeline, return the generated image, remove the file
         temp_filename = str(int(time.time())) + '.jpg'
-        image = pipe(message.content, negative_prompt=negative_prompt, width=1024, height=1024, guidance_scale=5, num_inference_steps=15).images[0].save(temp_filename)
+        image = pipe(prompt, negative_prompt=negative_prompt, width=1024, height=1024, guidance_scale=5, num_inference_steps=15).images[0].save(temp_filename)
         await message.channel.send(file = discord.File(temp_filename, spoiler=True))
         os.remove(temp_filename)
 
