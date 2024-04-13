@@ -1,23 +1,43 @@
 services:
 
-    discord_bot_stable_diffusion_xl:
+    stable_diffusion_discord_bot:
         build:
             context: ./
-            dockerfile: docker/python/Dockerfile
-        container_name: discord_bot_stable_diffusion_xl
+            dockerfile: docker/stable-diffusion-bot/Dockerfile
+        container_name: stable_diffusion_discord_bot
         env_file:
-            - ./docker/python/stable-diffusion-xl.env
-        image: discord_bot_stable_diffusion_xl
+            - ./docker/stable-diffusion-bot/.env
+        image: stable_diffusion_discord_bot
         volumes:
-            - ./code/stable-diffusion-xl:/code
+            - ./code/stable-diffusion-bot:/code
 
-    discord_bot_animagine_xl:
+    animagine_discord_bot:
         build:
             context: ./
-            dockerfile: docker/python/Dockerfile
-        container_name: discord_bot_animagine_xl
+            dockerfile: docker/animagine-bot/Dockerfile
+        container_name: animagine_discord_bot
         env_file:
-            - ./docker/python/animagine.env
-        image: discord_bot_animagine_xl
+            - ./docker/animagine-bot/.env
+        image: animagine_discord_bot
         volumes:
-            - ./code/animagine-xl:/code
+            - ./code/animagine-bot:/code
+
+    ollama_server:
+        build:
+            context: ./
+            dockerfile: docker/ollama-server/Dockerfile
+        container_name: ollama_server
+        image: ollama_server
+        volumes:
+            - ./code/ollama-server:/code
+
+    ollama_discord_bot:
+        build:
+            context: ./
+            dockerfile: docker/ollama-bot/Dockerfile
+        container_name: ollama_discord_bot
+        env_file:
+            - ./docker/ollama-bot/.env
+        image: ollama_discord_bot
+        volumes:
+            - ./code/ollama-bot:/code
